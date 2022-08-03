@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import styles from './app.module.css';
+import Card from './components/Card';
 
 function App() {
+
+  const [data, setData] = useState([]);
+
+  const fetchPokemon = async () => {
+
+    const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=200&offset=0');
+    const pokemonData = [];
+    for (let i = 0; i < response.data.results.length; i++) {
+      const individualResponse = await axios.get(response.data.results[i].url);
+      pokemonData.push(individualResponse.data);
+    }
+    setData(pokemonData);
+  }
+
+  useEffect(() => {
+    fetchPokemon();
+
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`${styles.container}`}>
+      <div className={`${styles.nav}`}></div>
+      <div className={`${styles.cardContainer}`}>
+        {data.map(item => <Card key={item.id} cardData={item} />)}
+      </div>
     </div>
   );
 }

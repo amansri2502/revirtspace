@@ -1,0 +1,20 @@
+.card{
+    width:80%;
+    height:45vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.1);
+}
+
+.imageContainer{
+    border-radius: 50%;
+    width: 14rem;
+    height: 14rem;
+}
+
+.imageContainer img{
+    height:12rem
+}
