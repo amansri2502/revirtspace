@@ -50,9 +50,9 @@ function App() {
 
   return (
     <div className={`${styles.container}`}>
-      <div className={`${styles.nav}`}>
+      {data.length>0 && <div className={`${styles.nav}`}>
         <input placeholder='Search by name' type="text" value={keyword} onChange={(e) => setkeyword(e.target.value)} />
-      </div>
+      </div>}
       <div className={`${styles.cardContainer}`}>
         {list.map(item => <Card key={item.id} cardData={item} />)}
       </div>
