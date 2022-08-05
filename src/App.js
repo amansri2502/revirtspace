@@ -9,9 +9,11 @@ function App() {
   const [keyword, setkeyword] = useState('');
   const [filteredList, setFilteredList] = useState([]);
   const [offset, setOffset] = useState(0);
+  const [loading, setloading] = useState(false);
+  const [list, setList] = useState([]);
 
   const fetchPokemon = async () => {
-
+    setloading(true)
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=50&offset=${offset}`);
     const pokemonData = [...data];
     for (let i = 0; i < response.data.results.length; i++) {
@@ -19,6 +21,7 @@ function App() {
       pokemonData.push(individualResponse.data);
     }
     setData(pokemonData);
+    setloading(false);
   }
 
   useEffect(() => {
@@ -37,7 +40,13 @@ function App() {
     }
   }, [keyword, data]);
 
-  const list = keyword ? filteredList : data
+  useEffect(() => {
+    setList(keyword ? filteredList : data)
+
+
+  }, [list, keyword, filteredList, data])
+
+
 
   return (
     <div className={`${styles.container}`}>
@@ -47,7 +56,7 @@ function App() {
       <div className={`${styles.cardContainer}`}>
         {list.map(item => <Card key={item.id} cardData={item} />)}
       </div>
-      {list.length > 0 && !keyword && <div className={`${styles.navigator}`}><button onClick={() => setOffset(10000 - offset < 50 ? 10000 : offset + 50)}>Load more</button></div>}
+      {list.length > 0 && !keyword && <div className={`${styles.navigator}`}><button disabled={loading} onClick={() => setOffset(10000 - offset < 50 ? 10000 : offset + 50)}>Load more</button></div>}
     </div>
   );
 }
