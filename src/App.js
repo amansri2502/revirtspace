@@ -8,11 +8,12 @@ function App() {
   const [data, setData] = useState([]);
   const [keyword, setkeyword] = useState('');
   const [filteredList, setFilteredList] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   const fetchPokemon = async () => {
 
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=30&offset=0');
-    const pokemonData = [];
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=50&offset=${offset}`);
+    const pokemonData = [...data];
     for (let i = 0; i < response.data.results.length; i++) {
       const individualResponse = await axios.get(response.data.results[i].url);
       pokemonData.push(individualResponse.data);
@@ -22,7 +23,8 @@ function App() {
 
   useEffect(() => {
     fetchPokemon();
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [offset])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,6 +47,7 @@ function App() {
       <div className={`${styles.cardContainer}`}>
         {list.map(item => <Card key={item.id} cardData={item} />)}
       </div>
+      {list.length > 0 && !keyword && <div className={`${styles.navigator}`}><button onClick={() => setOffset(10000 - offset < 50 ? 10000 : offset + 50)}>Load more</button></div>}
     </div>
   );
 }

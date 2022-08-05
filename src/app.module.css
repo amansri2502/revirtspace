@@ -48,3 +48,16 @@ html{
     grid-gap: 1.5rem;
     justify-items: center;
 }
+
+.navigator{
+    display:flex;
+    justify-content: center;
+}
+
+.navigator button{
+    padding: 1.5rem 3rem;
+    margin: 1rem;
+    border-radius:16px ;
+    border:none;
+    cursor: pointer;
+}

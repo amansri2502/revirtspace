@@ -26,7 +26,7 @@ const Card = (props) => {
                 {props.cardData.stats.map((item) => {
                     return (<div style={{ width: '100%', marginTop: '14px', alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
                         <p style={{ width: '25%', color: '#fff', fontWeight: 'bold' }}>{item.stat.name}</p>
-                        <div style={{ position: 'relative', width: '80%', backgroundColor: '#F19686', height: '10px' }}>
+                        <div style={{ position: 'relative', width: '80%',overflow:'hidden', backgroundColor: '#F19686', height: '10px' }}>
                             <div style={{ position: 'absolute', top: '0', left: '0', width: `${item.base_stat}%`, height: '10px',backgroundColor:'#D14D36' }}></div>
                         </div>
                         <p style={{ width: '15%', marginLeft: '10px', color: '#fff', fontWeight: 'bold' }}>{item.base_stat}</p>
